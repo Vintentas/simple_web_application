@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Test system student project</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<header>
+    <title>Project: find users</title>
+    <div th:replace="~{fragments/header::header}"></div>
+</header>
+<body>
+<div class="jumbotron container">
+
+    <form action="#" th:action="@{filter}" method="post">
+        <div class="input-group mb-3">
+
+            <div class="input-group-prepend">
+                <label class="input-group-text">User filter:</label>
+            </div>
+            <input type="text" placeholder="Name" aria-label="First name" class="form-control" th:name="nameFilter">
+            <input type="text" placeholder="Last name" aria-label="Last name" class="form-control"
+                   th:name="lastNameFilter">
+            <div class="input-group-append">
+                <input type="submit" class="btn btn-secondary btn-lg btn-block" value="Filter"/>
+            </div>
+        </div>
+    </form>
+
+
+    <h3>Users list</h3>
+    <table sec:authorize="hasAnyAuthority('STUDENT','TRAINER')" class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+        </tr>
+        </thead>
+        <tbody th:each="dbuser: ${users}">
+        <tr>
+            <td th:text="${dbuser.id}"></td>
+            <td th:text="${dbuser.name}"></td>
+            <td th:text="${dbuser.lastName}"></td>
+            <td th:text="${dbuser.email}"></td>
+            <td th:text="${dbuser.getRoleName()}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div sec:authorize="hasAuthority('ADMINISTRATOR')">
+        <div class="input-group-lg bg-dark text-white d-flex align-items-center">
+            <div class="input-group col-1 float-left">ID</div>
+            <div class="input-group col-2 float-left">First name</div>
+            <div class="input-group col-3 float-left">Last name</div>
+            <div class="input-group col-3 float-left">Email</div>
+            <div class="input-group col-2 float-left">Role</div>
+            <div class="input-group col-1 float-left">Changes</div>
+        </div>
+
+        <div th:each="dbuser:${users}">
+            <form th:action="@{/updateUser}" th:object="${user}" method="post">
+                <div class="input-group">
+                    <div class="input-group-prepend col-1 d-flex align-items-center" th:text="${dbuser.id}">
+                    </div>
+                    <input type="hidden" th:name="id" th:value="${dbuser.id}" class="form-control col-2">
+                    <input type="text" th:name="name" th:value="${dbuser.name}" class="form-control col-2">
+                    <input type="text" th:name="lastName" th:value="${dbuser.lastName}" class="form-control col-3">
+                    <div class="input-group-append col-3 d-flex align-items-center" th:text="${dbuser.email}"></div>
+                    <select class="custom-select" id="inputGroupSelect01" name="roleId">
+                        <option th:each="roleid : ${T(org.example.springtest.common.UserRole).values()}"
+                                th:value="${roleid.ordinal()+1}"
+                                th:text="${roleid}"
+                                th:selected="${roleid.name().equals(dbuser.getRoleName())}"
+                        ></option>
+                    </select>
+                    <div class="input-group-append">
+                        <input class="btn btn-secondary" type="submit" value="Apply">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+    <!--                <td th:text="${dbuser.id}">-->
+    <!--                </td>-->
+    <!--                <td>-->
+    <!--                    <input type="text" >-->
+    <!--                </td>-->
+    <!--                <td>-->
+    <!--                    <input type="text" >-->
+    <!--                </td>-->
+    <!--                <td th:text="${dbuser.email}"></td>-->
+    <!--                <td>-->
+    <!--                    <select class="custom-select">-->
+    <!--                        <option th:text="${dbuser.getRoleName()}"></option>-->
+    <!--                        <option th:each="roleid : ${T(org.example.springtest.common.UserRole).values()}"-->
+    <!--                                th:value="${roleid.ordinal()+1}" th:text="${roleid}"></option>-->
+    <!--                    </select>-->
+    <!--                </td>-->
+
+</div>
+</body>
+<footer>
+    <div th:insert="~{fragments/footer::footer}"></div>
+</footer>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+</html>

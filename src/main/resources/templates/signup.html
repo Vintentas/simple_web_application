@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Test system student project</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<header>
+    <title>Project: sign up</title>
+    <div th:replace="~{fragments/header::header}"></div>
+</header>
+
+
+<body>
+    <div class="jumbotron container">
+        <h1>
+            Sign Up
+            <span sec:authentication="name"></span>
+        </h1>
+
+        <div class="alert alert-success" th:text="${message}">
+            Please log in to use full functionality.
+        </div>
+
+
+    <form action="/" class="input-group" th:action="@{create}" th:object="${user}" method="post">
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text">First and last name</label>
+            </div>
+            <input type="text" aria-label="First name" class="form-control" th:field="*{name}">
+            <input type="text" aria-label="Last name" class="form-control" th:field="*{lastName}">
+
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text">Email</label>
+            </div>
+            <input type="email" class="form-control" th:field="*{email}">
+
+            <div class="input-group-prepend">
+                <label class="input-group-text">Select role</label>
+            </div>
+
+            <select class="custom-select" th:field="*{roleId}">
+                <option th:each="roleid : ${T(org.example.springtest.common.UserRole).values()}"
+                        th:value="${roleid.ordinal()+1}" th:text="${roleid}"></option>
+            </select>
+
+        </div>
+
+        <div class="input-group mb-3">
+
+            <div class="input-group-prepend">
+                <label class="input-group-text">Password</label>
+            </div>
+            <input type="password" class="form-control" th:name="pass1">
+
+            <div class="input-group-prepend">
+                <label class="input-group-text">Confirm password</label>
+            </div>
+            <input type="password" class="form-control" th:name="pass2">
+
+        </div>
+        <input type="submit" class="btn btn-secondary btn-lg btn-block" value="Create New user"/>
+    </form>
+    </div>
+
+
+
+</body>
+<footer>
+    <div th:insert="~{fragments/footer::footer}"></div>
+</footer>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</html>

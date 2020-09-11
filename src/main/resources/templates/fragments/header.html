@@ -1,0 +1,66 @@
+<th:block
+          xmlns:th="http://www.thymeleaf.org"
+          xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+          th:fragment="header">
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container d-flex justify-content-between">
+            <div class="navbar-brand d-flex align-items-center">
+                <a class="navbar-brand" href="/">
+                    <strong>Welcome</strong>
+<!--                    <strong sec:authorize="isAuthenticated()" th:text="', '${user.name}"></strong>-->
+                </a>
+            </div>
+
+            <div sec:authorize="isAnonymous()" class="navbar-band d-flex align-items-center">
+                <a th:href="@{~/signup}" class="navbar-brand" >
+                    <strong>Sign up</strong>
+                </a>
+            </div>
+
+            <div sec:authorize="isAnonymous()" class="navbar-band d-flex align-items-center">
+                <a th:href="@{~/login}" class="navbar-brand" >
+                    <strong>Log in</strong>
+                </a>
+            </div>
+            <div sec:authorize="isAuthenticated()"  class="navbar-band d-flex align-items-center">
+                <a th:href="@{~/find}" class="navbar-brand">
+                    <strong>Find users</strong>
+                </a>
+            </div>
+
+            <button sec:authorize="isAuthenticated()" class="navbar-toggler" type="button" data-toggle="modal" data-target=".bd-example-modal-lg"
+                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content bg-dark">
+                        <button type="button" class="btn btn-outline-info">
+                            <a th:href="@{~/changepass}" class="navbar-brand">
+                                <strong>Change password</strong>
+                            </a>
+                        </button>
+                        <button sec:authorize="hasAuthority('ADMINISTRATOR')" type="button" class="btn btn-outline-info">
+                            <a th:href="@{~/logger}" class="navbar-brand">
+                                <strong>Log page</strong>
+                            </a>
+                        </button>
+                        <button type="button" class="btn btn-outline-info">
+                            <a th:href="@{~/error}" class="navbar-brand">
+                                <strong>Error page</strong>
+                            </a>
+                        </button>
+                        <button type="button" class="btn btn-outline-info">
+                        <a th:href="@{~/logout}" class="navbar-brand">
+                            <strong>Log out</strong>
+                        </a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</th:block>

@@ -1,0 +1,15 @@
+USE db_example2;
+
+-- -----------------------------------------------------
+-- Create a table for logging user changes
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS user_logger (
+	id INT(11) INT(11) NOT NULL AUTO_INCREMENT,
+	changer_id int,
+	date DATETIME NOT NULL,
+	message varchar(255) NULL DEFAULT NULL,
+	changes LONGTEXT NULL DEFAULT NULL,
+	changed_user_id int,
+	PRIMARY KEY (log_id)
+    UNIQUE INDEX log_id_UNIQUE (id ASC));

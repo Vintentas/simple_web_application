@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Test system student project</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<header>
+    <title>Project: change password</title>
+    <div th:replace="~{fragments/header::header}"></div>
+</header>
+
+
+<body>
+<div class="jumbotron container">
+    <h1>
+        Change password
+    </h1>
+
+    <div th:if="${message}" th:text="${message}" class="alert alert-warning">
+    </div>
+
+    <form th:action="@{/changepass}" method="post" class="input-group" name="f">
+
+        <div th:if="${param.error}" class="alert alert-danger">
+            Invalid username and password.
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text">Old password</label>
+            </div>
+            <input type="password" class="form-control" name="oldPassword">
+
+            <div class="input-group-prepend">
+                <label class="input-group-text">New password</label>
+            </div>
+            <input type="password" class="form-control" name="newPassword">
+
+            <div class="input-group-prepend">
+                <label class="input-group-text">Confirm new password</label>
+            </div>
+            <input type="password" class="form-control" name="confirmPassword">
+        </div>
+        <input type="submit" class="btn btn-secondary btn-lg btn-block" value="Apply"/>
+    </form>
+
+
+</div>
+
+
+</body>
+<footer>
+    <div th:insert="~{fragments/footer::footer}"></div>
+</footer>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+</html>
